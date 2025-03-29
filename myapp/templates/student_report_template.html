@@ -1,0 +1,252 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Report</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h3 {
+            color: #333; /* Dark text color for headings */
+        }
+
+        /* Header */
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #34495e;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Table Styling */
+        .tables {
+            margin: 20px auto;
+            width: 95%;
+            max-width: 900px;
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            padding: 20px; /* Increased padding for larger cells */
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #34495e;
+            color: white;
+            font-weight: bold;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f4f4f4;
+        }
+
+        /* Support Table Styling */
+        .support-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+        }
+
+        .support-table th, .support-table td {
+            padding: 20px; /* Increased padding for larger cells */
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .support-table th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #ecf0f1;
+            padding: 20px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .footer .recommendations, .footer .performance {
+            margin-bottom: 20px;
+        }
+
+        .footer h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Container for images, if any */
+        .image-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        /* Image at the bottom centered */
+        .bottom-image {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .bottom-image img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Responsive Design for Print */
+        @media print {
+            body {
+                font-size: 12pt;
+            }
+
+            .header, .footer {
+                padding: 10px;
+            }
+
+            table th, table td {
+                padding: 8px;
+            }
+
+            .logo {
+                width: 40px;
+                height: 40px;
+            }
+
+            .title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{% static 'user.png' %}" alt="Logo" class="logo" style="display:block; margin:auto;">
+
+        <div class="title">Student Performance Report</div>
+    </div>
+    
+    <div class="tables">
+        <table>
+            <h3>Student Academic Info</h3>
+            <tr><th>Name</th><td>{{ name }}</td></tr>
+            <tr><th>Family Name</th><td>{{ familyname }}</td></tr>
+            <tr><th>Teacher</th><td>{{ teacher }}</td></tr>
+            <tr><th>Class Name</th><td>{{ class_name }}</td></tr>
+            <tr><th>Age</th><td>{{ age }}</td></tr>
+            <tr><th>Gender</th><td>{{ sex }}</td></tr>
+            <tr><th>Guardian</th><td>{{ guardian }}</td></tr>
+        </table>
+        
+        <table>
+            <h3>Family & Socioeconomic Background</h3>
+            <tr><th>Address</th><td>{{ address }}</td></tr>
+            <tr><th>Family Size</th><td>{{ famsize }}</td></tr>
+            <tr><th>Parental Status</th><td>{{ Pstatus }}</td></tr>
+            <tr><th>Mother's Education</th><td>{{ Medu }}</td></tr>
+            <tr><th>Father's Education</th><td>{{ Fedu }}</td></tr>
+            <tr><th>Mother's Job</th><td>{{ Mjob }}</td></tr>
+            <tr><th>Father's Job</th><td>{{ Fjob }}</td></tr>
+            <tr><th>Reason for School</th><td>{{ reason }}</td></tr>
+        </table>
+        
+        <table>
+            <h3>Academic Performance</h3>
+            <tr><th>Travel Time</th><td>{{ traveltime }}</td></tr>
+            <tr><th>Study Time</th><td>{{ studytime }}</td></tr>
+            <tr><th>Failures</th><td>{{ failures }}</td></tr>
+            <tr><th>Family Relations</th><td>{{ famrel }}</td></tr>
+            <tr><th>Free Time</th><td>{{ freetime }}</td></tr>
+            <tr><th>Going Out</th><td>{{ goout }}</td></tr>
+            <tr><th>Daily Alcohol</th><td>{{ Dalc }}</td></tr>
+            <tr><th>Weekend Alcohol</th><td>{{ Walc }}</td></tr>
+            <tr><th>Health</th><td>{{ health }}</td></tr>
+            <tr><th>Absences</th><td>{{ absences }}</td></tr>
+        </table>
+    </div>
+    
+    <table class="support-table">
+       <h3>Academic Performance</h3> 
+        <tr>
+            <th>School Support</th>
+            <th>Family Support</th>
+            <th>Paid Classes</th>
+            <th>Extra Activities</th>
+            <th>Attended Nursery</th>
+            <th>Higher Education</th>
+            <th>Internet Access</th>
+            <th>Romantic Relationship</th>
+            <th>Grade 1 (G1)</th>
+            <th>Grade 2 (G2)</th>
+            <th>Final Grade (G3)</th>
+        </tr>
+        <tr>
+            <td>{{ schoolsup }}</td>
+            <td>{{ famsup }}</td>
+            <td>{{ paid }}</td>
+            <td>{{ activities }}</td>
+            <td>{{ nursery }}</td>
+            <td>{{ higher }}</td>
+            <td>{{ internet }}</td>
+            <td>{{ romantic }}</td>
+            <td>{{ G1 }}</td>
+            <td>{{ G2 }}</td>
+            <td>{{ G3 }}</td>
+        </tr>
+    </table>
+
+    <!-- Bottom Image Container -->
+    <div class="bottom-image">
+        <img src="{% static 'QRID_IDAA23_25.png' %}" alt="Image at the bottom">
+    </div>
+    
+    <div class="footer">
+        <div class="recommendations">
+            <h3>Recommendations:</h3>
+            <p>{{ messages }}</p>
+        </div>
+        
+        <div class="performance">
+            <h3>Performance Prediction:</h3>
+            <p>
+                Excellent performance! Keep up the great work.
+                Good effort! Some improvements can be made.
+                Performance at risk! Immediate action required.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<section>
+    <h2>Send Message</h2>
+    <form action="{% url 'send_message_to_teacher' %}" method="POST">
+        {% csrf_token %}
+        <select name="teacher" required>
+            {% for teacher in teachers %}
+                <option value="{{ teacher.id }}">{{ teacher.name }}</option>
+            {% endfor %}
+        </select>
+        <textarea name="message" placeholder="Enter your message" required></textarea><br>
+        <br><button type="submit" class="btn">Send Message</button>
+    </form>
+</section>
+<section id="messages">
+    <h2>Messages</h2>
+    <ul>
+        {% for message in admin.user.sent_messages.all %}
+            <li>{{ message.content }} - {{ message.sent_at }} (To: {{ message.recipient.email }})</li>
+        {% empty %}
+            <li>No messages sent yet.</li>
+        {% endfor %}
+    </ul>
+</section>
+
+</body>
+</html>

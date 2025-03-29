@@ -1,0 +1,295 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7fb;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #2C3E50;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.header .user-info {
+    display: flex;
+    align-items: center;
+}
+.header img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+.header h3 {
+    margin: 0;
+    font-weight: 600;
+}
+.header h4 {
+    margin: 5px 0;
+    font-weight: 400;
+    color: #ecf0f1;
+}
+.header .buttons {
+    display: flex;
+    gap: 15px;
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 18px;
+    background-color: #FF8700; /* Adjusted to preferred color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+.btn:hover {
+    background-color: #e67e22; /* Slightly darker hover state */
+}
+
+/* Container */
+.container {
+    padding: 30px 40px;
+}
+.welcome-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+/* Chart Box */
+.chart-box {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+}
+.chart-box h3 {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+    color: #2C3E50;
+}
+
+/* Alerts */
+.alert-message {
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+.alert-message.risk {
+    background-color: #e74c3c;
+}
+.alert-message.no-risk {
+    background-color: #27ae60;
+}
+
+/* Student Info Table */
+.student-info-table {
+    width: 100%;
+    margin-top: 30px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.student-info-table th,
+.student-info-table td {
+    padding: 12px 20px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.student-info-table th {
+    background-color: #ecf0f1;
+    font-weight: 600;
+}
+.student-info-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Responsive Layout */
+@media screen and (max-width: 768px) {
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Messages Section */
+#messages ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#messages li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+#messages span {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Improve Section Header in Messages */
+#messages h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="user-info">
+            <img src="{% static 'user.png' %}" alt="User Avatar">
+            <div>
+                <h3>{{ student.name }} - {{ student.familyname }}</h3>
+                <h4>{{ student.teacher }} - {{ student.class_name }}</h4>
+            </div>
+        </div>
+        <div class="buttons">
+            <a href="#" class="btn">Profile</a>
+            <a href="#logout" class="btn">Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Welcome, {{ student.name }}</h1>
+            <div class="alert-message {% if student.result == '0' %}risk{% else %}no-risk{% endif %}">
+                {% if student.result == '0' %}
+                    You are at risk!
+                {% elif student.result == '1' %}
+                    No risk detected.
+                {% else %}
+                    No predection yet.
+                {% endif %}
+            </div>
+            <div class="buttons">
+                <a href="{% url 'predict_student_result' student.id %}" class="btn">Predict Result</a>
+                <a href="{% url 'generate_report' student.id %}" class="btn">Generate PDF Report</a>
+                
+            </div>
+            
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <table class="student-info-table">
+                <tr><th>Name</th><td>{{ student.name }}</td></tr>
+                <tr><th>Family Name</th><td>{{ student.familyname }}</td></tr>
+                <tr><th>Class</th><td>{{ student.class_name }}</td></tr>
+                <tr><th>Teacher</th><td>{{ student.teacher }}</td></tr>
+                <tr><th>Absences</th><td>{{ student.absences }}</td></tr>
+                <tr><th>Study Time</th><td>{{ student.studytime }}</td></tr>
+            </table>
+            <div class="chart-box">
+                <h3>Absence Analysis</h3>
+                <canvas id="absenceChart"></canvas>
+            </div>
+            <!-- Student Info Table -->
+            
+        </div><br>
+
+        <!-- More Charts -->
+        <div class="charts-container">
+            <div class="chart-box">
+                <h3>G3 Performance</h3>
+                <canvas id="G3Chart"></canvas>
+            </div>
+            <div class="chart-box">
+                <h3>Study Time Analysis</h3>
+                <canvas id="studyTimeChart"></canvas>
+            </div><br>
+        </div>
+
+        <!-- Messages Section -->
+        <div class="charts-container">
+            <div class="chart-box">
+                <section id="messages" class="inline-section">
+                    <h2>Messages</h2>
+                    <ul>
+                        {% for message in student.user.received_messages.all %}
+                            <li><span>{{ message.sent_at }} </span> -- {{ message.content }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const absenceCtx = document.getElementById('absenceChart').getContext('2d');
+        new Chart(absenceCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Current Student', 'Class Mean'],
+                datasets: [{
+                    label: 'Absences',
+                    data: [{{ student.absences }}, {{ mean_absences|default:0 }}],  // student and mean absences
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)'
+                }]
+            }
+        });
+    
+        const G3Ctx = document.getElementById('G3Chart').getContext('2d');
+        new Chart(G3Ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Current Student', 'Class Mean'],
+                datasets: [{
+                    label: 'G3 Score',
+                    data: [{{ student.G3 }}, {{ mean_G3|default:0 }}],  // student and mean G3 score
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    fill: false
+                }]
+            }
+        });
+    
+        const studyTimeCtx = document.getElementById('studyTimeChart').getContext('2d');
+        new Chart(studyTimeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Current Student', 'Class Mean'],
+                datasets: [{
+                    label: 'Study Time',
+                    data: [{{ student.studytime }}, {{ mean_studytime|default:0 }}],  // student and mean studytime
+                    backgroundColor: ['#FF6384', '#36A2EB']
+                }]
+            }
+        });
+    </script>
+    
+</body>
+</html>

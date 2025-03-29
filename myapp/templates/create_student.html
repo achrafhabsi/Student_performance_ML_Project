@@ -1,0 +1,120 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>creat student</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fb;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; /* Prevent overall page scroll */
+        }
+
+        /* Main Container */
+        .container {
+            width: 80%;
+            max-width: 800px;
+            height: 80vh; /* Set the container height */
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            overflow-y: auto; /* Enable scrolling if the content is too long */
+        }
+
+        /* Header */
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            
+        }
+
+        /* Input and Textarea */
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            font-weight: 500;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #FF8700;
+            outline: none;
+        }
+
+        /* Button */
+        .btn {
+            padding: 12px 18px;
+            background-color: #FF8700;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #e67e22;
+        }
+
+        /* Responsive Layout */
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Update Student Profile -->
+        <section>
+            <form method="POST">
+                <h2>Create Student</h2>
+                {% csrf_token %}
+                <!-- User Details -->
+                <h3>User Details</h3>
+                {{ user_form.as_p }}
+                <!-- Student Details -->
+                <h3>Student Details</h3>
+                {{ student_form.as_p }}
+                <button type="submit" class="btn">Create Student</button>
+            </form>
+            <a href="{% url 'student_list' %}" class="link">Back to Student List</a>
+        </section>
+    </div>
+</body>
+</html>

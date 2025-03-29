@@ -1,0 +1,191 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #2c3e50;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+            color: white;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+            padding: 10px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+        }
+
+        .sidebar ul li:hover {
+            background-color: #34495e;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background-color: #FF8700;
+            padding: 15px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #FF8700;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #e67600;
+        }
+
+        .link {
+            font-size: 16px;
+            color: #FF8700;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border: 1px solid #FF8700;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .link:hover {
+            background-color: #FF8700;
+            color: white;
+        }
+
+        /* Student List */
+        section {
+            padding: 20px;
+        }
+
+        section h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        section ul {
+            list-style-type: none;
+        }
+
+        section ul li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 10px;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 10px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+
+            form {
+                width: 100%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <h2>Admin Dashboard</h2>
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="{% url 'create_student' %}">Create Student</a></li>
+            <li><a href="{% url 'create_teacher' %}">Create Teacher</a></li>
+            <li><a href="#">Generate Reports</a></li>
+            <li><a href="{% url 'send_message_to_teacher' %}">Send Message</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Students List -->
+        <section>
+            <h2>Manage Teachers</h2><br>
+            <a href="{% url 'create_teacher' %}" class="btn">Create Teacher</a><br><br>
+            <ul>
+                {% for teacher in teachers %}
+                    <li>
+                        <a href="{% url 'ads_teacher_update' teacher.id %}" class="link">{{ teacher.name }} ({{ teacher.subject }})</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+</body>
+</html>
