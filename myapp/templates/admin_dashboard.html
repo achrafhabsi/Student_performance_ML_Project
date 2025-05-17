@@ -5,295 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
-<style>
-    /* Global Styles */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f7fb;
-    margin: 0;
-    padding: 0;
-    color: #333;
     
-}
-/* Button Container Styling */
-.buttons-container {
-    margin-left: 15px;
-    display: flex;
-    justify-content: left; /* Centers buttons */
-    gap: 27px; /* Adds space between buttons */
-    flex-wrap: wrap; /* Ensures responsiveness */
-}
-
-.buttons-container a img {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 15px; /* Adds rounded corners */
-}
-
-.buttons-container a img:hover {
-    transform: scale(1.1); /* Makes the images slightly bigger */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adds a soft shadow on hover */
-}
-/* Header */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background-color: #2C3E50;
-    color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-bottom: 5px solid #FF8700; /* Add a border to separate header */
-    border-radius: 70px;
-}
-
-.header .user-info {
-    display: flex;
-    align-items: center;
-}
-
-.header img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-right: -940px;
-    object-fit: cover;
-    margin-left: -10px;
-}
-
-.header h1 {
-    margin: 0;
-    font-weight: 600;
-}
-
-.header p {
-    margin: 5px 0;
-    font-weight: 400;
-    color: #ecf0f1;
-}
-
-.header .buttons {
-    display: flex;
-    gap: 15px;
-}
-
-/* Buttons */
-.btn {
-    padding: 12px 18px;
-    background-color: #FF8700; /* Adjusted to preferred color */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    display: inline-block;
-}
-
-.btn:hover {
-    background-color: #e67e22; /* Slightly darker hover state */
-}
-
-/* Container */
-.main-content {
-    padding: 30px 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-/* Stats Section */
-/* Stats Section */
-.stats {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    flex-wrap: nowrap; /* Prevent wrapping */
-}
-
-.stats > div {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.stats h1 {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0;
-    white-space: nowrap; /* Prevent text from breaking */
-}
-
-.stats table {
-    border-collapse: collapse;
-}
-
-.stats table th,
-.stats table td {
-    padding: 8px 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-
-.stats table th {
-    background-color: #f4f7fb;
-    font-weight: bold;
-}
-
-.stats .actions {
-    margin-left: auto; /* Push button to the right */
-}
-
-.stats .btn {
-    padding: 10px 15px;
-}
-
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-table th, table td {
-    padding: 15px;
-    text-align: center;
-    border: 1px solid #ddd;
-}
-
-table th {
-    background-color: #f4f7fb;
-    font-weight: bold;
-}
-
-table td {
-    font-size: 18px;
-    color: #555;
-}
-
-/* Actions (Button Alignment) */
-.actions {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-/* Section Content */
-.section-content {
-    margin-top: 30px;
-    display: none;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.section-content h2 {
-    margin-bottom: 20px;
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.section-content ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.section-content ul li {
-    margin: 10px 0;
-    font-size: 16px;
-    border: 1px solid #ddd; /* Contour around each li */
-    padding: 10px;
-    border-radius: 5px;
-    position: relative; /* For absolute positioning of buttons */
-}
-
-.section-content ul li a {
-    color: #FF8700;
-    font-weight: 600;
-    text-decoration: none;
-    padding-left: 10px;
-}
-
-.section-content ul li a:hover {
-    text-decoration: underline;
-}
-
-/* Align the first button (Edit) to the absolute left */
-.section-content ul li a:first-child {
-    position: absolute;
-    left: 1300px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-/* Align the second button (Delete) to the absolute right */
-.section-content ul li a:nth-child(2) {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-/* Risk Charts */
-.charts-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-}
-
-.chart-container {
-    width: 98%; /* Adjusted to fit two charts per row */
-    min-width: 300px;
-    padding: 15px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Form Styling */
-select, textarea {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-    font-weight: 500;
-    transition: border-color 0.3s ease;
-}
-
-select:focus, textarea:focus {
-    border-color: #FF8700;
-    outline: none;
-}
-
-/* Responsive Layout */
-@media screen and (max-width: 768px) {
-    .buttons-container {
-        flex-direction: column;
-    }
-
-    .charts-container {
-        flex-direction: column;
-    }
-
-    .chart-container {
-        width: 50%;
-    }
-}
-</style>
+    <link rel="stylesheet" href="{% static 'admin_dashboard.css' %}">
     
-
 </head>
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var studentsAtRisk = {{ students_at_risk_count|default:0 }};
+        var studentsNotAtRisk = {{ students_not_at_risk_count|default:0 }};
+        var teachersAtRisk = {{ teachers_at_risk_count|default:0 }};
+        var teachersNotAtRisk = {{ teachers_not_at_risk_count|default:0 }};
+    </script> <!-- Include Chart.js -->
+<div id="chart-data" 
+data-students-at-risk="{{ students_at_risk_count|default:0 }}" 
+data-students-not-at-risk="{{ students_not_at_risk_count|default:0 }}" 
+data-teachers-at-risk="{{ teachers_at_risk_count|default:0 }}" 
+data-teachers-not-at-risk="{{ teachers_not_at_risk_count|default:0 }}">
+</div>
+
+    <script src="{% static 'admin_dashboard.js' %}"></script>
     <!-- Main Content -->
     <div class="main-content">
         <!-- Header with Admin Info -->
@@ -316,7 +47,8 @@ select:focus, textarea:focus {
                 <table><tr><th><img src="{% static '45.png' %}" alt="User Image" width="150px"></th><td><strong>{{total_classes}}</strong></td></tr></table>
             </div>
             <div class="actions">
-                <button class="btn">Generate PDF Report</button>
+                <a href="{% url 'generate_admin_report' admin.id %}" class="btn" target="_blank">Generate Report</a>
+                
             </div>
         </div>
         <div class="chart-container"><h3>Easy Access: </h3><!-- Section Buttons -->
@@ -447,86 +179,7 @@ select:focus, textarea:focus {
     </div>
 
     <script>
-        // Function to toggle visibility of sections
-        function showDiv(divId) {
-            // Hide all divs
-            const divs = ['students', 'teachers', 'classes', 'Recomandations'];
-            divs.forEach(div => {
-                document.getElementById(div).style.display = 'none';
-            });
-
-            // Show the clicked div
-            document.getElementById(divId).style.display = 'block';
-        }
        
-    // Get data from Django template context
-var studentsAtRisk = {{ students_at_risk_count }};
-var studentsNotAtRisk = {{ students_not_at_risk_count }};
-var teachersAtRisk = {{ teachers_at_risk_count }};
-var teachersNotAtRisk = {{ teachers_not_at_risk_count }};
-
-// Students Risk Chart
-var ctx1 = document.getElementById('studentsRiskChart').getContext('2d');
-new Chart(ctx1, {
-    type: 'bar',
-    data: {
-        labels: ['At Risk', 'Not at Risk'],
-        datasets: [{
-            label: 'Students Risk Status',
-            data: [studentsAtRisk, studentsNotAtRisk],
-            backgroundColor: ['#FF4C4C', '#32CD32'],
-            borderColor: ['#FF4C4C', '#32CD32'],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: { y: { beginAtZero: true } }
-    }
-});
-
-// Teachers Risk Chart
-var ctx2 = document.getElementById('teachersRiskChart').getContext('2d');
-new Chart(ctx2, {
-    type: 'bar',
-    data: {
-        labels: ['At Risk', 'Not at Risk'],
-        datasets: [{
-            label: 'Teachers Risk Status',
-            data: [teachersAtRisk, teachersNotAtRisk],
-            backgroundColor: ['#FF4C4C', '#32CD32'],
-            borderColor: ['#FF4C4C', '#32CD32'],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: { y: { beginAtZero: true } }
-    }
-});
-
-
-
-function updateEmail(checkbox) {
-        var textarea = document.getElementById("message");
-        console.log("Checkbox checked: " + checkbox.checked);
-        console.log("Email value: " + checkbox.value);
-        // If checkbox is checked, add the email to the textarea
-        if (checkbox.checked) {
-            // Check if the textarea already has content
-            if (textarea.value.trim() !== "") {
-                textarea.value += "\n" + checkbox.value;  // Append email with new line
-            } else {
-                textarea.value = checkbox.value;  // Just add email if no content
-            }
-        } else {
-            // If checkbox is unchecked, remove the email from the textarea
-            var emailList = textarea.value.split("\n")
-                .filter(email => email !== checkbox.value);  // Remove the unchecked email
-            textarea.value = emailList.join("\n");  // Join the remaining emails back into a string
-        }
-    }
-
     </script>
 </body>
 </html>

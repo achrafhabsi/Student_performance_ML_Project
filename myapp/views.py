@@ -21,12 +21,13 @@ def login_view(request):
             password = form.cleaned_data['password']
             try:
                 user = User.objects.get(email=email, password=password)
+                x = user.id - 1
                 if user.user_type == 'student':
-                    return redirect(f'/student/{user.student.id}/dashboard/')
+                    return redirect(f'/student/{x}/dashboard/')
                 elif user.user_type == 'teacher':
                     return redirect(f'/teacher/{user.id}/dashboard/')
                 elif user.user_type == 'admin':
-                    return redirect(f'/ads/{user.admin.id}/dashboard/')
+                    return redirect(f'/ads/{user.id}/dashboard/')
             except User.DoesNotExist:
                 # Handle incorrect login
                 return render(request, 'login.html', {'form': form, 'error': 'Invalid credentials'})
@@ -253,22 +254,150 @@ def generate_report(request, student_id):
 
 
 
-# Generate Report for Teacher's Class (Teacher)
-def generate_teacher_report(request, teacher_id):
-    teacher = Teacher.objects.get(id=teacher_id)
-    students = Student.objects.filter(teacher=teacher)
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="{teacher.name}_report.pdf"'
+import io
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from xhtml2pdf import pisa
+from .models import Teacher, Student
+from datetime import datetime
 
-    p = canvas.Canvas(response, pagesize=letter)
-    p.drawString(100, 750, f"Teacher Report: {teacher.name}")
-    p.drawString(100, 730, f"Subject: {teacher.subject}")
-    p.drawString(100, 710, f"Number of Students: {students.count()}")
-    p.showPage()
-    p.save()
+def generate_teacher_report(request, teacher_id):
+    # Fetch teacher data
+    teacher = get_object_or_404(Teacher, id=teacher_id)
+    
+    # Fetch all students in the teacher's classes
+    students = Student.objects.filter(class_name__in=teacher.classes.all())
+    
+    # Categorize students by result
+    students_result_0 = students.filter(result=0)
+    students_result_1 = students.filter(result=1)
+    students_result_other = students.exclude(result__in=[0, 1])
+
+    # Prepare data for the template
+    form_data = {
+        "name": teacher.name,
+        "familyname": teacher.familyname,
+        "phone": teacher.phone,
+        "address": teacher.address,
+        "hiredate": teacher.hiredate.strftime('%Y-%m-%d'),
+        "subject": teacher.subject,
+        "classes": ", ".join([cls.name for cls in teacher.classes.all()]),
+        "students_result_0": students_result_0,
+        "students_result_1": students_result_1,
+        "students_result_other": students_result_other,
+        "qr": r"C:\Users\pc\Desktop\myproject\myapp\static\QRID_IDAA23_25.png",  # Path to the QR code image
+        "report_date": datetime.now().strftime("%Y-%m-%d"),
+        "logo": r"C:\Users\pc\Desktop\myproject\myapp\static\azee.png"
+    }
+    form_data["pie_chart"] = generate_pie_chart(students_result_0, students_result_1, students_result_other)
+
+    # Render HTML template
+    html_string = render_to_string('teacher_report_template.html', form_data)
+
+    # Convert HTML to PDF
+    pdf_file = io.BytesIO()
+    pisa_status = pisa.CreatePDF(io.StringIO(html_string), dest=pdf_file)
+
+    if pisa_status.err:
+        return HttpResponse("Error generating PDF", content_type="text/plain")
+
+    # Return the PDF response
+    pdf_file.seek(0)
+    response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="teacher_report_{teacher_id}.pdf"'
+
     return response
 
+
+
+from django.shortcuts import render
+from .models import Admin, Teacher, Student, Class
+import qrcode
+import base64
+from io import BytesIO
+from datetime import date
+
+def generate_qr_code(data):
+    qr = qrcode.make(data)
+    buffer = BytesIO()
+    qr.save(buffer, format="PNG")
+    qr_base64 = base64.b64encode(buffer.getvalue()).decode()
+    return f'data:image/png;base64,{qr_base64}'
+
+from django.shortcuts import render, get_object_or_404
+from .models import Admin, Teacher, Student, Class
+from datetime import date
+from django.http import HttpResponse
+from xhtml2pdf import pisa
+from django.conf import settings
+
+def admin_report(request, admin_id):
+    # Fetch the admin data
+    admin = get_object_or_404(Admin, id=admin_id)
+    
+    # Fetch total counts of teachers, students, and classes
+    total_teachers = Teacher.objects.count()
+    total_students = Student.objects.count()
+    total_classes = Class.objects.count()
+    
+    # Fetch students based on results
+    total_students_result_0 = Student.objects.filter(result=0).count()
+    total_students_result_1 = Student.objects.filter(result=1).count()
+
+    # Path to pre-generated QR code image
+    qr_image_path = r"C:\Users\pc\Desktop\myproject\myapp\static\QRID_IDAA23_25.png"
+
+    # Prepare data for the template
+    context = {
+        'admin': admin,
+        'total_teachers': total_teachers,
+        'total_students': total_students,
+        'total_classes': total_classes,
+        'total_students_result_0': total_students_result_0,
+        'total_students_result_1': total_students_result_1,
+        'qr': qr_image_path,  # Direct path to the pre-generated QR code image
+        'report_date': date.today().strftime('%Y-%m-%d'),
+        'logo': r"C:\Users\pc\Desktop\myproject\myapp\static\azee.png",  # Path to the logo image
+    }
+
+    # Prepare HTML string from template
+    html_string = render_to_string('ads_report_template.html', context)
+
+    # Convert HTML to PDF
+    pdf_file = BytesIO()
+    pisa_status = pisa.CreatePDF(html_string, dest=pdf_file)
+
+    if pisa_status.err:
+        return HttpResponse("Error generating PDF", content_type="text/plain")
+
+    # Return the PDF response
+    pdf_file.seek(0)
+    response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="admin_report_{admin_id}.pdf"'
+
+    return response
+
+
 # Student Views
+import matplotlib.pyplot as plt
+import base64
+
+# Generate Pie Chart
+def generate_pie_chart(students_result_0, students_result_1, students_result_other):
+    labels = ["Result = 0", "Result = 1", "Other"]
+    sizes = [students_result_0.count(), students_result_1.count(), students_result_other.count()]
+    colors = ["#FF5733", "#33FF57", "#337BFF"]
+
+    plt.figure(figsize=(4, 4))
+    plt.pie(sizes, labels=labels, autopct="%1.1f%%", colors=colors, startangle=90)
+    plt.axis("equal")
+
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format="png")
+    buffer.seek(0)
+    
+    return base64.b64encode(buffer.getvalue()).decode()
 
 
 
@@ -355,30 +484,6 @@ from .models import Message, Admin
 from django.shortcuts import render, get_object_or_404
 from .models import Message, Admin
 from django.contrib.auth.models import User
-
-def get_sended_messages(request, admin_id):
-    admin = Admin.objects.get(user_id=admin_id)
-    teachers = Teacher.objects.all()
-
-    # Ensure request.user is a User instance
-    if not isinstance(request.user, User):
-        return render(request, 'ads_messages.html', {'error': 'Invalid user session'})
-
-    # Fetch messages sent by the logged-in user
-    sent_messages = Message.objects.filter(sender=request.user).order_by('-sent_at')
-    
-    if request.method == 'POST':
-        # Sending message to teacher
-        if 'send_message_to_teacher' in request.POST:
-            teacher_id = request.POST['teacher']
-            message_content = request.POST['message']
-            teacher = Teacher.objects.get(id=teacher_id)
-            message = Message(sender=request.user, recipient=teacher.user, content=message_content, message_type='admin_to_teacher')
-            message.save()
-
-    return render(request, 'ads_messages.html', {'admin': admin, 'teachers': teachers, 'sent_messages': sent_messages,})
-
-
 
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import User, Student, Teacher, Admin, Message

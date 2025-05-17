@@ -1,0 +1,108 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff00ff, #671bff);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 80%;
+    max-width: 900px;
+    height: 400px;
+    display: flex;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+}
+
+.container .left {
+    flex: 1;
+    background: url("/static/logo.png") no-repeat center;
+    background-size:contain;
+}
+
+.container .right {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right h2 {
+    margin: 0 0 20px;
+    color: #7300ff;
+    font-size: 24px;
+    text-align: center;
+}
+
+.right form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Adds consistent spacing between inputs */
+}
+
+.right form input,
+.right form button {
+    width: 100%; /* Ensure inputs take full width */
+    max-width: 400px; /* Optional max width for smaller screens */
+    margin: 0 auto; /* Center-align inputs in the form */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.right form button {
+    background-color: #8800ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.right form button:hover {
+    background-color: #6333ff;
+}
+
+.right .create-account {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.right .create-account a {
+    color: #FF8700;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.right .create-account a:hover {
+    color: #FF5733;
+}
+
+/* Make the form responsive */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .container .left {
+        height: 200px;
+    }
+
+    .right {
+        padding: 20px;
+    }
+
+    .right form input,
+    .right form button {
+        max-width: 100%;
+    }
+}

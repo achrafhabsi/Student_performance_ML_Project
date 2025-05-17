@@ -1,0 +1,113 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7fb;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: auto; /* Allows scrolling if content overflows */
+}
+
+/* Main Container */
+.container {
+    width: 600px;
+    height: 600px;
+    
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    overflow-y: auto; /* Allows scrolling if needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Headings */
+h1 {
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: #c28686;
+    margin-bottom: 20px;
+}
+
+/* Lists */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Forms */
+form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    font-weight: 500;
+    transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #FF8700;
+    outline: none;
+}
+
+/* Buttons */
+button, .btn {
+    padding: 12px 18px;
+    background-color: #FF8700;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+button:hover, .btn:hover {
+    background-color: #e67e22;
+}
+
+/* Textarea */
+textarea {
+    height: 100px;
+    padding: 10px;
+    border-radius: 4px;
+    resize: vertical;
+}

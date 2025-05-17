@@ -28,7 +28,7 @@ class StudentForm(forms.ModelForm):
                   'Medu', 'Fedu', 'Mjob', 'Fjob', 'reason', 'guardian', 'schoolsup', 'famsup', 
                   'paid', 'activities', 'nursery', 'higher', 'internet', 'romantic', 'traveltime', 
                   'studytime', 'failures', 'famrel', 'freetime', 'goout', 'Dalc', 'Walc', 'health', 
-                  'absences', 'G3']
+                  'absences']
 
     # Use the choices defined in the model directly
     sex = forms.ChoiceField(choices=[(1, 'Male'), (2, 'Female')])
@@ -48,16 +48,15 @@ class StudentForm(forms.ModelForm):
     higher = forms.ChoiceField(choices=[(1, 'Yes'), (2, 'No')])
     internet = forms.ChoiceField(choices=[(1, 'Yes'), (2, 'No')])
     romantic = forms.ChoiceField(choices=[(1, 'Yes'), (2, 'No')])
-    
     traveltime = forms.ChoiceField(choices=[(1, '<15 min'), (2, '15-30 min'), (3, '30 min-1 hour'), (4, '>1 hour')])
     studytime = forms.ChoiceField(choices=[(1, '<2 hours'), (2, '2-5 hours'), (3, '5-10 hours'), (4, '>10 hours')])
-    failures = forms.ChoiceField(choices=[(1, '1-2 failures'), (4, '3 or more failures')])
+    failures = forms.ChoiceField(choices=[(1, '1 failure'), (2, '2 failures'), (3, '3 failures'), (4, '4 or more failures')])
     famrel = forms.ChoiceField(choices=[(1, 'Very bad'), (2, 'Bad'), (3, 'Average'), (4, 'Good'), (5, 'Excellent')])
-    freetime = forms.ChoiceField(choices=[(1, 'Very low'), (5, 'Very high')])
-    goout = forms.ChoiceField(choices=[(1, 'Very low'), (5, 'Very high')])
-    Dalc = forms.ChoiceField(choices=[(1, 'Very low'), (5, 'Very high')])
-    Walc = forms.ChoiceField(choices=[(1, 'Very low'), (5, 'Very high')])
-    health = forms.ChoiceField(choices=[(1, 'Very bad'), (5, 'Very good')])
+    freetime = forms.ChoiceField(choices=[(1, 'Very low'), (2, 'Low'), (3, 'Medium'), (4, 'High'), (5, 'Very high')])
+    goout = forms.ChoiceField(choices=[(1, 'Very low'), (2, 'Low'), (3, 'Medium'), (4, 'High'), (5, 'Very high')])
+    Dalc = forms.ChoiceField(choices=[(1, 'Very low'), (2, 'Low'), (3, 'Medium'), (4, 'High'), (5, 'Very high')])
+    Walc = forms.ChoiceField(choices=[(1, 'Very low'), (2, 'Low'), (3, 'Medium'), (4, 'High'), (5, 'Very high')])
+    health = forms.ChoiceField(choices=[(1, 'Very bad'), (2, 'Bad'), (3, 'Average'), (4, 'Good'), (5, 'Very good')])
 
 
 # Form for Login

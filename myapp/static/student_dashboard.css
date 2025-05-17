@@ -1,0 +1,156 @@
+        /* Global Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fb;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #2C3E50;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+        .header h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+        .header h4 {
+            margin: 5px 0;
+            font-weight: 400;
+            color: #ecf0f1;
+        }
+        .header .buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 12px 18px;
+            background-color: #FF8700; /* Adjusted to preferred color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #e67e22; /* Slightly darker hover state */
+        }
+        
+        /* Container */
+        .container {
+            padding: 30px 40px;
+        }
+        .welcome-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        
+        /* Chart Box */
+        .chart-box {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
+        .chart-box h3 {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            color: #2C3E50;
+        }
+        
+        /* Alerts */
+        .alert-message {
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+        }
+        .alert-message.risk {
+            background-color: #e74c3c;
+        }
+        .alert-message.no-risk {
+            background-color: #27ae60;
+        }
+        
+        /* Student Info Table */
+        .student-info-table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .student-info-table th,
+        .student-info-table td {
+            padding: 12px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .student-info-table th {
+            background-color: #ecf0f1;
+            font-weight: 600;
+        }
+        .student-info-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        
+        /* Responsive Layout */
+        @media screen and (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Messages Section */
+        #messages ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        #messages li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        #messages span {
+            font-size: 12px;
+            color: #888;
+        }
+        
+        /* Improve Section Header in Messages */
+        #messages h2 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+        

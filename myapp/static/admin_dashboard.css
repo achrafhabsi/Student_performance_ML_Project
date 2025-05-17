@@ -1,0 +1,282 @@
+ /* Global Styles */
+ body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7fb;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    
+}
+/* Button Container Styling */
+.buttons-container {
+    margin-left: 15px;
+    display: flex;
+    justify-content: left; /* Centers buttons */
+    gap: 27px; /* Adds space between buttons */
+    flex-wrap: wrap; /* Ensures responsiveness */
+}
+
+.buttons-container a img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 15px; /* Adds rounded corners */
+}
+
+.buttons-container a img:hover {
+    transform: scale(1.1); /* Makes the images slightly bigger */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adds a soft shadow on hover */
+}
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #2C3E50;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-bottom: 5px solid #FF8700; /* Add a border to separate header */
+    border-radius: 70px;
+}
+
+.header .user-info {
+    display: flex;
+    align-items: center;
+}
+
+.header img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: -940px;
+    object-fit: cover;
+    margin-left: -10px;
+}
+
+.header h1 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.header p {
+    margin: 5px 0;
+    font-weight: 400;
+    color: #ecf0f1;
+}
+
+.header .buttons {
+    display: flex;
+    gap: 15px;
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 18px;
+    background-color: #FF8700; /* Adjusted to preferred color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.btn:hover {
+    background-color: #e67e22; /* Slightly darker hover state */
+}
+
+/* Container */
+.main-content {
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Stats Section */
+/* Stats Section */
+.stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex-wrap: nowrap; /* Prevent wrapping */
+}
+
+.stats > div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.stats h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap; /* Prevent text from breaking */
+}
+
+.stats table {
+    border-collapse: collapse;
+}
+
+.stats table th,
+.stats table td {
+    padding: 8px 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.stats table th {
+    background-color: #f4f7fb;
+    font-weight: bold;
+}
+
+.stats .actions {
+    margin-left: auto; /* Push button to the right */
+}
+
+.stats .btn {
+    padding: 10px 15px;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f4f7fb;
+    font-weight: bold;
+}
+
+table td {
+    font-size: 18px;
+    color: #555;
+}
+
+/* Actions (Button Alignment) */
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* Section Content */
+.section-content {
+    margin-top: 30px;
+    display: none;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-content h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.section-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.section-content ul li {
+    margin: 10px 0;
+    font-size: 16px;
+    border: 1px solid #ddd; /* Contour around each li */
+    padding: 10px;
+    border-radius: 5px;
+    position: relative; /* For absolute positioning of buttons */
+}
+
+.section-content ul li a {
+    color: #FF8700;
+    font-weight: 600;
+    text-decoration: none;
+    padding-left: 10px;
+}
+
+.section-content ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Align the first button (Edit) to the absolute left */
+.section-content ul li a:first-child {
+    position: absolute;
+    left: 1300px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Align the second button (Delete) to the absolute right */
+.section-content ul li a:nth-child(2) {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Risk Charts */
+.charts-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.chart-container {
+    width: 98%; /* Adjusted to fit two charts per row */
+    min-width: 300px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Styling */
+select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    font-weight: 500;
+    transition: border-color 0.3s ease;
+}
+
+select:focus, textarea:focus {
+    border-color: #FF8700;
+    outline: none;
+}
+
+/* Responsive Layout */
+@media screen and (max-width: 768px) {
+    .buttons-container {
+        flex-direction: column;
+    }
+
+    .charts-container {
+        flex-direction: column;
+    }
+
+    .chart-container {
+        width: 50%;
+    }
+}

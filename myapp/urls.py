@@ -20,6 +20,7 @@ urlpatterns = [
     path('ads/class/delete/<str:class_name>/', views.delete_class ,name='delete_class'),
     path('students/', views.student_list, name='student_list'),
     path('teachers/', views.teacher_list, name='teacher_list'),
+    path('generate_admin_report/<int:admin_id>/', views.admin_report, name='generate_admin_report'),
     #path('ads/messages/<int:admin_id>/', views.get_sended_messages, name='ads_messages'),
     
     # Teacher Views
