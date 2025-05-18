@@ -11,30 +11,30 @@ The developed web application offers tailored features for different users, enab
 
 Students:
 
-Access to their personal and academic data.
+. Access to their personal and academic data.
 
-View individual and class statistics.
+. View individual and class statistics.
 
-Personalized prediction of success or failure.
+. Personalized prediction of success or failure.
 
-Generate PDF reports including results ...
+. Generate PDF reports including results ...
 
 Teachers:
 
-Access overall class statistics.
+. Access overall class statistics.
 
-Identify struggling students and track their progress.
+. Identify struggling students and track their progress.
 
-Send personalized recommendations to at-risk students.
+. Send personalized recommendations to at-risk students.
 
-Generate detailed PDF reports summarizing performance and personal info.
+. Generate detailed PDF reports summarizing performance and personal info.
 
 Administrators:
 
-Manage student, teacher, and class accounts.
+. Manage student, teacher, and class accounts.
 
-Access institution-wide indicators (enrollment, results, etc.).
+. Access institution-wide indicators (enrollment, results, etc.).
 
-Generate institutional PDF reports summarizing key statistics.
+. Generate institutional PDF reports summarizing key statistics.
 
 This setup ensures effective, personalized monitoring and facilitates communication between users through alerts and recommendations.
